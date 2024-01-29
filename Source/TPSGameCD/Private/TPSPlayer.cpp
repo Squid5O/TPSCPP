@@ -35,7 +35,8 @@ ATPSPlayer::ATPSPlayer()
 	cameraComp = CreateDefaultSubobject<UCameraComponent>( TEXT( "cameraComp" ) );
 	cameraComp->SetupAttachment( springArmComp );
 
-
+	//PC : mesh를 로드해서 적용하고 싶다.
+	ConstructorHelpers::FObjectFinder tempMesh;
 
 
 }

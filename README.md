@@ -113,4 +113,10 @@ Movenvents Pawn 부터 가능
 
 w 오른쪽
 s 왼쪽
-d 
+d 앞
+a 뒤
+
+https://github.com/deadbydaylightNO/DBD
+
+https://github.com/deadbydaylightNO/DBD
+/Script/Engine.SkeletalMesh'/Game/Characters/Mannequins/Meshes/SKM_Quinn.SKM_Quinn'
