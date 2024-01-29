@@ -39,5 +39,8 @@ public:
 	void OnAxisVertical( float value );
 	void OnAxisHorizontal( float value );
 
+	void OnAxisTurnYaw( float value );
+	void OnAxisLookupPitch( float value );
+
 	void onActionJump();
 };

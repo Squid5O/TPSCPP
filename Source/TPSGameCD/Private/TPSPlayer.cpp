@@ -66,13 +66,20 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis(TEXT("Move Forward / Backward"), this, &ATPSPlayer::OnAxisHorizontal );
 
 	PlayerInputComponent->BindAxis(TEXT("Move Right / Left"), this, &ATPSPlayer::OnAxisVertical );
+	
+	PlayerInputComponent->BindAxis(TEXT( "Turn Right / Left Mouse" ) , this , &ATPSPlayer::OnAxisTurnYaw );
+
+	PlayerInputComponent->BindAxis(TEXT( "Look Up / Down Mouse" ) , this , &ATPSPlayer::OnAxisLookupPitch );
 
 	PlayerInputComponent->BindAction( TEXT( "Jump" ) , IE_Pressed , this , &ATPSPlayer::onActionJump );
 }
 
 void ATPSPlayer::Move()
 {
-	AddMovementInput( direction );
+	///FTransform trnas( direction );
+	FTransform trnas = cameraComp->GetComponentTransform();  // 카메라도 가능
+	//FTransform trnas = GetActorTransform();
+	AddMovementInput( trnas.TransformVector(direction));
 }
 
 void ATPSPlayer::OnAxisVertical( float value )
@@ -83,6 +90,18 @@ void ATPSPlayer::OnAxisVertical( float value )
 void ATPSPlayer::OnAxisHorizontal( float value )
 {
 	direction.Y = value;
+}
+
+
+void ATPSPlayer::OnAxisTurnYaw( float value )
+{
+	AddControllerYawInput( value );
+}
+
+
+void ATPSPlayer::OnAxisLookupPitch( float value )
+{
+	AddControllerPitchInput( value );
 }
 
 void ATPSPlayer::onActionJump()

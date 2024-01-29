@@ -110,3 +110,7 @@ End Object
 
 Jump는 character 상속
 Movenvents Pawn 부터 가능
+
+w 오른쪽
+s 왼쪽
+d 
