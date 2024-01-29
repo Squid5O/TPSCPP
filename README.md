@@ -130,4 +130,4 @@ projctile movent
 
 스캘래톤은 피식스 에섹이 있어야 충돌 가능 <-> mesh랑 다름 
 
-FirePosition
+FirePosition d
