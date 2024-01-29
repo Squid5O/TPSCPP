@@ -85,3 +85,28 @@ ohmygod - 인벤토리
 
 -------------------////////////////////////1.29
 
+x 앞 pitch 
+y 옆 roll
+z 위 Yaw
+
+앞뒤양옆 움직이면서 카메라 회전에 맞춰 돌아가게 해야함
+
+Begin Object Class=/Script/BlueprintGraph.K2Node_CallFunction Name="K2Node_CallFunction_4" ExportPath="/Script/BlueprintGraph.K2Node_CallFunction'/Game/Blueprints/BP_TPSPlayer.BP_TPSPlayer:EventGraph.K2Node_CallFunction_4'"
+   bIsPureFunc=True
+   bIsConstFunc=True
+   FunctionReference=(MemberParent="/Script/CoreUObject.Class'/Script/Engine.SceneComponent'",MemberName="GetRelativeTransform")
+   NodePosX=-704
+   NodePosY=528
+   NodeGuid=2F052CCB400FD8916A788D9A75811AB6
+   CustomProperties Pin (PinId=29F78D0C43DF5644A43532952143C092,PinName="self",PinFriendlyName=NSLOCTEXT("K2Node", "Target", "Target"),PinToolTip="Target\nScene Component Object Reference",PinType.PinCategory="object",PinType.PinSubCategory="",PinType.PinSubCategoryObject="/Script/CoreUObject.Class'/Script/Engine.SceneComponent'",PinType.PinSubCategoryMemberReference=(),PinType.PinValueType=(),PinType.ContainerType=None,PinType.bIsReference=False,PinType.bIsConst=False,PinType.bIsWeakPointer=False,PinType.bIsUObjectWrapper=False,PinType.bSerializeAsSinglePrecisionFloat=False,LinkedTo=(K2Node_VariableGet_0 C565AE434067940A00A66E80B4701959,),PersistentGuid=00000000000000000000000000000000,bHidden=False,bNotConnectable=False,bDefaultValueIsReadOnly=False,bDefaultValueIsIgnored=False,bAdvancedView=False,bOrphanedPin=False,)
+   CustomProperties Pin (PinId=F99202584D239A740120B28D2285A7C5,PinName="ReturnValue",PinToolTip="Return Value\nTransform\n\nReturns the transform of the component relative to its parent",Direction="EGPD_Output",PinType.PinCategory="struct",PinType.PinSubCategory="",PinType.PinSubCategoryObject="/Script/CoreUObject.ScriptStruct'/Script/CoreUObject.Transform'",PinType.PinSubCategoryMemberReference=(),PinType.PinValueType=(),PinType.ContainerType=None,PinType.bIsReference=False,PinType.bIsConst=False,PinType.bIsWeakPointer=False,PinType.bIsUObjectWrapper=False,PinType.bSerializeAsSinglePrecisionFloat=False,PersistentGuid=00000000000000000000000000000000,bHidden=False,bNotConnectable=False,bDefaultValueIsReadOnly=False,bDefaultValueIsIgnored=False,bAdvancedView=False,bOrphanedPin=False,)
+End Object
+ㄴ 회전값 가져옴
+
+1.컨트롤 입력 받음
+2.포세스한 대상한테만 밀어넣음
+3.본체 카메라에 밀어넣음??
+ㄴ orient Rotation to Movment 하면 한방에?
+
+Jump는 character 상속
+Movenvents Pawn 부터 가능
