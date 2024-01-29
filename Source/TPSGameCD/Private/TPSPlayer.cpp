@@ -4,6 +4,9 @@
 #include "TPSPlayer.h"
 #include "../../../../../../../Source/Runtime/Engine/Classes/GameFramework/SpringArmComponent.h"
 #include "../../../../../../../Source/Runtime/Engine/Classes/Camera/CameraComponent.h"
+#include "../../../../../../../Source/Runtime/Engine/Classes/Engine/SkeletalMesh.h"
+#include "../../../../../../../Source/Runtime/Engine/Classes/GameFramework/Character.h"
+#include "../../../../../../../Source/Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 ATPSPlayer::ATPSPlayer()
@@ -36,9 +39,17 @@ ATPSPlayer::ATPSPlayer()
 	cameraComp->SetupAttachment( springArmComp );
 
 	//PC : mesh를 로드해서 적용하고 싶다.
-	ConstructorHelpers::FObjectFinder tempMesh;
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempMesh(TEXT("/Script/Engine.SkeletalMesh'/Game/Characters/Mannequins/Meshes/SKM_Quinn.SKM_Quinn'"));
+	//PC : 성공했다면
+	if (tempMesh.Succeeded()) {
+		//PC : mesh에 적용하고 싶다.
+		GetMesh()->SetSkeletalMesh( tempMesh.Object );
+		GetMesh()->SetRelativeLocationAndRotation( FVector( 0 , 0 , -90 ) , FRotator( 0 , -90 , 0 ) );
+	}
 
-
+	bUseControllerRotationYaw = true;
+	springArmComp->bUsePawnControlRotation = true;
+	GetCharacterMovement()->bOrientRotationToMovement = false; 
 }
 
 // Called when the game starts or when spawned

@@ -120,3 +120,5 @@ https://github.com/deadbydaylightNO/DBD
 
 https://github.com/deadbydaylightNO/DBD
 /Script/Engine.SkeletalMesh'/Game/Characters/Mannequins/Meshes/SKM_Quinn.SKM_Quinn'
+
+pritave 은 못쓴다. return을 찾아라
