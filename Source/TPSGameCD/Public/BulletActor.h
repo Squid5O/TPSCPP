@@ -28,6 +28,9 @@ public:
 	UPROPERTY( EditAnywhere , BlueprintReadWrite , Category = AAA )
 	class USphereComponent* sphereComp;
 
-		UPROPERTY( EditAnywhere , BlueprintReadWrite , Category = AAA )
+	UPROPERTY( EditAnywhere , BlueprintReadWrite , Category = AAA )
 	class UStaticMeshComponent* meshComp;
+
+	UPROPERTY( EditAnywhere , BlueprintReadWrite , Category = AAA )
+	class UProjectileMovementComponent* moveComp;
 };

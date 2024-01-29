@@ -7,6 +7,7 @@
 #include "../../../../../../../Source/Runtime/Engine/Classes/Engine/SkeletalMesh.h"
 #include "../../../../../../../Source/Runtime/Engine/Classes/GameFramework/Character.h"
 #include "../../../../../../../Source/Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
+#include "../../../../../../../Source/Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
 
 // Sets default values
 ATPSPlayer::ATPSPlayer()
@@ -50,6 +51,16 @@ ATPSPlayer::ATPSPlayer()
 	bUseControllerRotationYaw = true;
 	springArmComp->bUsePawnControlRotation = true;
 	GetCharacterMovement()->bOrientRotationToMovement = false; 
+
+	//pc: gunMesh Comp를 생성해서 로딩도 하고 배치학 싶다. mesh에 attach
+	gunMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>( TEXT( "gunMeshComp" ) );
+	gunMeshComp->SetupAttachment( GetMesh() );
+
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempGunMesh( TEXT( "/Script/Engine.SkeletalMesh'/Game/models/FPWeapon/Mesh/SK_FPGun.SK_FPGun'" ) );
+	if (tempGunMesh.Succeeded()) {
+		gunMeshComp->SetSkeletalMesh( tempGunMesh.Object );
+		gunMeshComp->SetRelativeLocation( FVector( 0 , 50 , 130 ) );
+	}
 }
 
 // Called when the game starts or when spawned

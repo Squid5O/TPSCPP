@@ -43,4 +43,8 @@ public:
 	void OnAxisLookupPitch( float value );
 
 	void onActionJump();
+
+	//pc: 총 매쉬를 추가하고싶당
+	UPROPERTY( EditAnywhere )
+	class USkeletalMeshComponent* gunMeshComp;
 };

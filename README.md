@@ -122,3 +122,12 @@ https://github.com/deadbydaylightNO/DBD
 /Script/Engine.SkeletalMesh'/Game/Characters/Mannequins/Meshes/SKM_Quinn.SKM_Quinn'
 
 pritave 은 못쓴다. return을 찾아라
+
+projctile movent
+
+/Script/Engine.SkeletalMesh'/Game/models/FPWeapon/Mesh/SK_FPGun.SK_FPGun'
+컴포넌트와 매쉬는 다르다. 변수명 구분 확실하게!
+
+스캘래톤은 피식스 에섹이 있어야 충돌 가능 <-> mesh랑 다름 
+
+FirePosition
