@@ -131,3 +131,40 @@ projctile movent
 스캘래톤은 피식스 에섹이 있어야 충돌 가능 <-> mesh랑 다름 
 
 FirePosition d
+
+////---1.30 수업
+jump max count
+
+defualt land movenent
+
+newObject<>() = createdefaultsubobject<>() 
+뉴오브젝트는 정적? 고수가되면 써라 
+
+리셋 버튼이 있는건 C++로 적용시켜랏
+
+Uclass* 하면 다 튀어나오기 때문에 TSubclassOf<class ABulletActor 형식 지정이 좋음
+
+timer 쓸려면 
+GetWorld() -> GetTimerManager().SetTimer 
+getworld 는 포인터 gettimeManger 레퍼런스  ->  .
+
+C++은 자유도가 높다 void 를 아무대나 박아도 쓸수가 있다.- 전역함수
+
+	//람다(ladbda)식, 무명함수(어노니머스 평션)
+	//[캡처대상](매개변수)->반환자료형{to do};
+	auto lambdaFun = [this]( int a , int b )->int {
+		return a + b;
+		};
+
+	int result = lambdaFun( 10 , 20 );
+
+reutrn 전에 리졸트 부터 나올수도
+
+람다 캡처
+
+디퓨즈 - 베이스 컬러
+
+/Script/Engine.StaticMesh'/Game/models/SniperGun/sniper1.sniper1'
+
+chooseGrenadeGun
+chooseShinperGun

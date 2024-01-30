@@ -8,6 +8,9 @@
 #include "../../../../../../../Source/Runtime/Engine/Classes/GameFramework/Character.h"
 #include "../../../../../../../Source/Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
 #include "../../../../../../../Source/Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
+#include "BulletActor.h"
+#include "../../../../../../../Source/Runtime/Engine/Classes/Components/StaticMeshComponent.h"
+#include "../../../../../../../Source/Runtime/UMG/Public/Blueprint/UserWidget.h"
 
 // Sets default values
 ATPSPlayer::ATPSPlayer()
@@ -56,17 +59,42 @@ ATPSPlayer::ATPSPlayer()
 	gunMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>( TEXT( "gunMeshComp" ) );
 	gunMeshComp->SetupAttachment( GetMesh() );
 
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempGunMesh( TEXT( "/Script/Engine.SkeletalMesh'/Game/models/FPWeapon/Mesh/SK_FPGun.SK_FPGun'" ) );
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempGunMesh( 
+		TEXT( "/Script/Engine.SkeletalMesh'/Game/models/FPWeapon/Mesh/SK_FPGun.SK_FPGun'" ) );
 	if (tempGunMesh.Succeeded()) {
 		gunMeshComp->SetSkeletalMesh( tempGunMesh.Object );
-		gunMeshComp->SetRelativeLocation( FVector( 0 , 50 , 130 ) );
+		gunMeshComp->SetRelativeLocation( FVector( 0 , 300 , 200 ) );
 	}
+
+	//pc: snipeMeshComp를 생성하고 싶다.
+	//pc: staticMesh를 적용해서 매쉬에 붙이고 싶다.
+	sniperMeshComp = CreateDefaultSubobject<UStaticMeshComponent>( TEXT( "sniperMeshComp" ) );
+	sniperMeshComp->SetupAttachment( GetMesh() );
+	ConstructorHelpers::FObjectFinder<UStaticMesh> tempSuniperMesh( 
+		TEXT( "/Script/Engine.StaticMesh'/Game/models/SniperGun/sniper1.sniper1'" ) );
+	if (tempSuniperMesh.Succeeded()) {
+		sniperMeshComp->SetStaticMesh( tempSuniperMesh.Object);
+		sniperMeshComp->SetRelativeLocation( FVector( 0 , 80 , 130 ) );
+		sniperMeshComp->SetWorldScale3D( FVector( 0.2f ));
+
+	}
+
+	gunMeshComp->SetCollisionEnabled( ECollisionEnabled::NoCollision );
+	sniperMeshComp->SetCollisionEnabled( ECollisionEnabled::NoCollision );
 }
 
 // Called when the game starts or when spawned
 void ATPSPlayer::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//crossHairUI = CreateWidget( GetWorld() , crossHairFactory );
+	//crossHairUI->AddToViewport();
+
+	//sniperScorpUI = CreateWidget( GetWorld() , sniperScorpFactory );
+	//sniperScorpUI->AddToViewport();
+
+	OnActionChooseGrenadeGun();
 	
 }
 
@@ -95,6 +123,12 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis(TEXT( "Look Up / Down Mouse" ) , this , &ATPSPlayer::OnAxisLookupPitch );
 
 	PlayerInputComponent->BindAction( TEXT( "Jump" ) , IE_Pressed , this , &ATPSPlayer::onActionJump );
+
+	PlayerInputComponent->BindAction( TEXT( "FIRE" ) , IE_Pressed , this , &ATPSPlayer::onActionFire );
+
+	PlayerInputComponent->BindAction( TEXT( "chooseGrenadeGun" ) , IE_Pressed , this , &ATPSPlayer::OnActionChooseGrenadeGun );
+
+	PlayerInputComponent->BindAction( TEXT( "chooseShinperGun" ) , IE_Pressed , this , &ATPSPlayer::OnActionChooseSniperGun );
 }
 
 void ATPSPlayer::Move()
@@ -130,5 +164,25 @@ void ATPSPlayer::OnAxisLookupPitch( float value )
 void ATPSPlayer::onActionJump()
 {
 	ACharacter::Jump();
+}
+
+void ATPSPlayer::onActionFire()
+{
+	FTransform t = gunMeshComp->GetSocketTransform(TEXT("FirePosition"));
+	GetWorld()->SpawnActor<ABulletActor>(bulletFactory, t);
+}
+
+void ATPSPlayer::OnActionChooseGrenadeGun()
+{
+	//pc : 유탄총을 보이게, 스나이퍼를 안보이게
+	gunMeshComp->SetVisibility( true );
+	sniperMeshComp->SetVisibility( false );
+}
+
+void ATPSPlayer::OnActionChooseSniperGun()
+{
+	//pc: 유탄총을 안보이게 , 스나이퍼를 보이게 
+	gunMeshComp->SetVisibility( false );
+	sniperMeshComp->SetVisibility( true );
 }
 

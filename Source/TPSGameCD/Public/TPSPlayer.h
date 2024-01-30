@@ -45,6 +45,34 @@ public:
 	void onActionJump();
 
 	//pc: 총 매쉬를 추가하고싶당
-	UPROPERTY( EditAnywhere )
+	UPROPERTY( EditAnywhere, BlueprintReadOnly )
 	class USkeletalMeshComponent* gunMeshComp;
+
+	UPROPERTY( EditAnywhere, BlueprintReadOnly )
+	class UStaticMeshComponent* sniperMeshComp;
+
+	//pc: 총알 공장을 만들고싶다.
+
+	//pc: 마우스 왼쪽 버튼을 누르면 총알공장에서 총알을 만들어서 
+	 //   ㄴFirePosition 소켓에 배치하고 싶당.
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class ABulletActor> bulletFactory;
+
+	void onActionFire();
+
+	void OnActionChooseGrenadeGun();
+	void OnActionChooseSniperGun();
+
+	//UPROPERTY(EditAnywhere)
+	//TSubclassOf<class UUserWidghet> crossHairFactory;
+
+	//UPROPERTY(EditAnywhere)
+	//TSubclassOf<class UUserWidghet> sniperScorpFactory;
+
+	//UPROPERTY(EditAnywhere)
+	//class UUserWidget* crossHairUI;
+
+	//UPROPERTY(EditAnywhere)
+	//class UUserWidget* sniperScorpUI;
 };

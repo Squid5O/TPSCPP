@@ -33,4 +33,6 @@ public:
 
 	UPROPERTY( EditAnywhere , BlueprintReadWrite , Category = AAA )
 	class UProjectileMovementComponent* moveComp;
+
+	FORCEINLINE void AutoDestroy() { this->Destroy(); }
 };

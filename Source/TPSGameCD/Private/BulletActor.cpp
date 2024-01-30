@@ -19,6 +19,7 @@ ABulletActor::ABulletActor()
 	meshComp->SetupAttachment( RootComponent );
 
 	moveComp = CreateDefaultSubobject<UProjectileMovementComponent>( TEXT( "moveComp" ) );
+	moveComp->SetUpdatedComponent( sphereComp );
 
 	//pc: speed 설정, 바운드 설정
 	moveComp->InitialSpeed = 2000.f;
@@ -27,6 +28,11 @@ ABulletActor::ABulletActor()
 
 	sphereComp->SetCollisionProfileName( TEXT( "BLockAll" ) );
 	meshComp->SetCollisionEnabled( ECollisionEnabled::NoCollision );
+
+	//pc: 메시의 크기를 25 로 하고 싶다
+	meshComp->SetWorldScale3D(FVector(0.25f));
+	//pc: 충돌체 반지름을 12.5 하고싶당
+	sphereComp->SetSphereRadius(12.5f);
 
 	//총알 액터의 수명을 5초로 하고 싶다
 	SetLifeSpan( 5 );
@@ -37,8 +43,25 @@ void ABulletActor::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//pc: 총알 액터의 숨여을 5초로 하고 싶다. - 타이머를 이용해서
+	FTimerHandle timeHandle;
+	//GetWorld()->GetTimerManager().SetTimer(timeHandle, this, &ABulletActor::AutoDestroy, 1, false);  얘또됨
 
-	moveComp->SetUpdatedComponent( sphereComp );
+	GetWorld()->GetTimerManager().SetTimer( timeHandle , 
+		FTimerDelegate::CreateLambda( [this]()->void {this->Destroy(); } ) , 1 , false );
+
+
+	/*
+	auto lambdaFun = [this]( int a , int b ) {};
+
+	//람다(ladbda)식, 무명함수(어노니머스 평션)
+	//[캡처대상](매개변수)->반환자료형{to do};
+	//print(1)
+	auto lambdaFun = [this]( int a , int b )->int {
+		return a + b;
+		};
+
+	int result = lambdaFun( 10 , 20 );*/
 }
 
 // Called every frame
