@@ -168,3 +168,7 @@ reutrn 전에 리졸트 부터 나올수도
 
 chooseGrenadeGun
 chooseShinperGun
+
+umg 수정해
+
+---------1.30 끝
