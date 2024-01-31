@@ -29,7 +29,7 @@ public:
 	UPROPERTY( EditAnywhere )
 	class USpringArmComponent* springArmComp;
 
-	UPROPERTY( EditAnywhere )
+	UPROPERTY( EditAnywhere, BlueprintReadOnly )
 	class UCameraComponent* cameraComp;
 
 	FVector direction;
@@ -64,15 +64,32 @@ public:
 	void OnActionChooseGrenadeGun();
 	void OnActionChooseSniperGun();
 
-	//UPROPERTY(EditAnywhere)
-	//TSubclassOf<class UUserWidghet> crossHairFactory;
+	void Zoom();
 
-	//UPROPERTY(EditAnywhere)
-	//TSubclassOf<class UUserWidghet> sniperScorpFactory;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UUserWidget> crossHairFactory;
 
-	//UPROPERTY(EditAnywhere)
-	//class UUserWidget* crossHairUI;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UUserWidget> sniperScorpFactory;
 
-	//UPROPERTY(EditAnywhere)
-	//class UUserWidget* sniperScorpUI;
+	UPROPERTY(EditAnywhere)
+	class UUserWidget* crossHairUI;
+
+	UPROPERTY(EditAnywhere)
+	class UUserWidget* sniperScorpUI;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float targetFOV = 90;
+/*
+	FORCEINLINE void OnActionZoomIn() { targetFOV = 30; }
+	FORCEINLINE void onAcitonZoomOut() { targetFOV = 90; }
+	*/
+	void OnActionZoomIn();
+
+	void OnAcitonZoomOut();
+
+	/// <summary>
+	/// // true: sniper, false = grenade
+	/// </summary>
+	bool bChooseSniperGun = false; 
 };

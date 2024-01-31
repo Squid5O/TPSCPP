@@ -176,3 +176,18 @@ umg 수정해
 
 1--.1.31 시작
 
+C++ lerp 함수
+
+상속성 inhaertied
+
+선형보간
+
+FORCEINLINE 쓰면 헤더에서 기능 작성 가능
+
+summary 기능 개이득
+
+line trace
+
+actor comp
+scene comp
+primitive comp

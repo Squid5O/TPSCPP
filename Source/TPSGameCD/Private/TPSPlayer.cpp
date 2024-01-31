@@ -88,11 +88,19 @@ void ATPSPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//crossHairUI = CreateWidget( GetWorld() , crossHairFactory );
-	//crossHairUI->AddToViewport();
+	crossHairUI = CreateWidget( GetWorld() , crossHairFactory );
+	crossHairUI->AddToViewport();
 
-	//sniperScorpUI = CreateWidget( GetWorld() , sniperScorpFactory );
-	//sniperScorpUI->AddToViewport();
+	sniperScorpUI = CreateWidget( GetWorld() , sniperScorpFactory );
+	sniperScorpUI->AddToViewport();
+
+	//pc:태어날 때 기본 crossHairUI만 보이게 하고 싶다.
+
+
+	//총을 교체하면 ZoomOut을 하고싶다.
+
+		//pc:태어날 때 기본 crossHairUI만 보이게 하고 싶다.
+	sniperScorpUI->SetVisibility( ESlateVisibility::Hidden );
 
 	OnActionChooseGrenadeGun();
 	
@@ -104,6 +112,8 @@ void ATPSPlayer::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	Move();
+
+	Zoom();
 
 }
 
@@ -129,6 +139,9 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAction( TEXT( "chooseGrenadeGun" ) , IE_Pressed , this , &ATPSPlayer::OnActionChooseGrenadeGun );
 
 	PlayerInputComponent->BindAction( TEXT( "chooseShinperGun" ) , IE_Pressed , this , &ATPSPlayer::OnActionChooseSniperGun );
+
+	PlayerInputComponent->BindAction( TEXT( "Zoom" ) , IE_Pressed , this, &ATPSPlayer::OnActionZoomIn);
+	PlayerInputComponent->BindAction( TEXT( "Zoom" ) , IE_Released, this , &ATPSPlayer::OnAcitonZoomOut );
 }
 
 void ATPSPlayer::Move()
@@ -174,6 +187,7 @@ void ATPSPlayer::onActionFire()
 
 void ATPSPlayer::OnActionChooseGrenadeGun()
 {
+	bChooseSniperGun = false;
 	//pc : 유탄총을 보이게, 스나이퍼를 안보이게
 	gunMeshComp->SetVisibility( true );
 	sniperMeshComp->SetVisibility( false );
@@ -181,8 +195,43 @@ void ATPSPlayer::OnActionChooseGrenadeGun()
 
 void ATPSPlayer::OnActionChooseSniperGun()
 {
+	bChooseSniperGun = true;
 	//pc: 유탄총을 안보이게 , 스나이퍼를 보이게 
 	gunMeshComp->SetVisibility( false );
 	sniperMeshComp->SetVisibility( true );
+	OnAcitonZoomOut();
+}
+
+void ATPSPlayer::Zoom()
+{
+	//pc: 선형보간을 사용해 현재 FOV를 targetFOV 값에 근접하게 하고싶다.
+	cameraComp->FieldOfView = FMath::Lerp<float>( 
+	cameraComp->FieldOfView , targetFOV , GetWorld()->GetDeltaSeconds() * 10
+	);														//10 곱하면 대략  0.1
+	//	cameraComp->FieldOfView , targetFOV , 0.1f 
+	
+}
+
+void ATPSPlayer::OnActionZoomIn()
+{
+	// 만약 스나이퍼가 손에 쥔 총이 스나이퍼가 안니라면 함수를 바로 종료하고 싶다.
+	if (false == bChooseSniperGun)
+	{
+		return;
+	}
+	 //if(!bChooseSniperGun)return;  한줄 가능
+	 // 
+	//pc:ZoomIn을 하면 crossHairUI를 보이지 않게, sniperUI 보이게 하고 싶다.
+	crossHairUI->SetVisibility( ESlateVisibility::Hidden );
+	sniperScorpUI->SetVisibility( ESlateVisibility::Visible);
+	targetFOV = 30;
+}
+
+void ATPSPlayer::OnAcitonZoomOut()
+{
+	crossHairUI->SetVisibility( ESlateVisibility::Visible );
+	sniperScorpUI->SetVisibility( ESlateVisibility::Hidden);
+	//pc:ZoomOut을 하면 CroessHairUI을 보이게, sniperUI를 보이지 않게 하고 싶다.
+	targetFOV = 90;
 }
 
