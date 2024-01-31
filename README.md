@@ -191,3 +191,17 @@ line trace
 actor comp
 scene comp
 primitive comp
+
+-ImpactNormal    = 기능같음
+.GetSafeNormal()  <- 얘는 원본 유지함
+
+apwn : Add
+APawn::AddControllerPitchInput 걍 사용 가능
+Pawn::AddControllerPitchInput' [지정된 모듈을 찾을 수 없습니다.]
+LogSelectionDetails: Warning: NavigateToFunctionSource:  Unable to find source file and line number for 'USceneComponent::GetSocketTransform' [지정된 모듈을 찾을 수 없습니다.]
+LogSelectionDetails: Warning: NavigateToFunctionSource:  Unable to find source file and line number for 'USceneComponent::GetSocketTransform' [지정된 모듈을 찾을 수 없습니다.]
+LogSelectionDetails: Warning: NavigateToFunctionSource:  Unable to find source file and line number for 'UCameraComponent
+
+		FCollisionQueryParams params;
+		params.AddIgnoredActor( this );
+ㄴ igoner self

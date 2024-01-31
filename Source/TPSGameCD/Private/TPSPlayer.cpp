@@ -11,6 +11,7 @@
 #include "BulletActor.h"
 #include "../../../../../../../Source/Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 #include "../../../../../../../Source/Runtime/UMG/Public/Blueprint/UserWidget.h"
+#include "../../../../../../../Source/Runtime/Engine/Classes/Components/SceneComponent.h"
 
 // Sets default values
 ATPSPlayer::ATPSPlayer()
@@ -181,8 +182,40 @@ void ATPSPlayer::onActionJump()
 
 void ATPSPlayer::onActionFire()
 {
+	// bChooseSniperGun ture false로 나가는거 다르게
+	if(bChooseSniperGun==false){
 	FTransform t = gunMeshComp->GetSocketTransform(TEXT("FirePosition"));
 	GetWorld()->SpawnActor<ABulletActor>(bulletFactory, t);
+	}
+	else {
+		FHitResult outHit;
+	//	FVector start = cameraComp->GetComponentLocation();
+		FVector start = cameraComp->K2_GetComponentLocation();
+		FVector end = start + cameraComp->GetForwardVector()*100000;
+		FCollisionQueryParams params;
+		params.AddIgnoredActor( this );
+		bool bReturnValue = GetWorld()->LineTraceSingleByChannel(
+			outHit , start , end , ECollisionChannel::ECC_Visibility , params );
+		//만약 부딪힌 것이 있따면.
+		if (bReturnValue) {
+		//	DrawDebugLine( GetWorld() , outHit.TraceStart , outHit.ImpactPoint , FColor::Red, false, 10);
+			//부딪힌 컴포넌트를 가져와서 
+			UPrimitiveComponent* hitComp = outHit.GetComponent();
+			//만약 컴포넌트가 있다. 그리고 컴포넌트의 물리가 켜져있다면.
+			if (hitComp && hitComp->IsSimulatingPhysics()) {
+				//그 컴포넌트에게 힘을 가하고 싶다.
+				FVector dir = end - start;
+				//hitComp->AddForce( -outHit.ImpactNormal * 500000 * hitComp->GetMass() );
+				hitComp->AddForce(dir.GetSafeNormal() * 500000 * hitComp->GetMass() );
+			}
+			
+		}
+		else
+		{
+		//	DrawDebugLine( GetWorld() , start , end , FColor::Blue , false , 10 );
+		}
+
+	}
 }
 
 void ATPSPlayer::OnActionChooseGrenadeGun()
