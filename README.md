@@ -239,3 +239,32 @@ owner - 컴포넌트의 주인 = 액터 or pawn 캐릭터
 /Script/Engine.SkeletalMesh'/Game/Characters/Mannequins/Meshes/SKM_Manny.SKM_Manny'
 
 * 포인터 - 전방선언
+
+get FloatVaule ->Set Relatvie Location
+
+tab enter enter
+
+ TickIdle();    break;
+	case EEnemyState::MOVE:   TickMoce();	 break;
+	case EEnemyState::ATTACk: TickAttack();  break;
+	case EEnemyState::DAMAGE: TickDamage();  break;
+	case EEnemyState::DIE:    TickDie();
+
+AActor 는 헤더 추가 되있어서 전방선언 안해도됌
+
+헤더 변수 선언
+
+		
+	UPROPERTY( EditAnywhere )
+	EEnemyState state;
+
+	UPROPERTY( EditAnywhere )
+	float AttackDistance = 200;
+
+	UPROPERTY( EditAnywhere )
+	//class AActor* target;
+	AActor* target;
+
+	UPROPERTY( EditAnywhere )
+	class AEnemy* me;
+------2.1 수업 시마이
