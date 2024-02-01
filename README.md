@@ -205,3 +205,37 @@ LogSelectionDetails: Warning: NavigateToFunctionSource:  Unable to find source f
 		FCollisionQueryParams params;
 		params.AddIgnoredActor( this );
 ㄴ igoner self
+
+
+----------------------2.1 시작
+
+선형보ㅑ간 - lerp , tween
+
+vector - > rotation -> lerp  3가지 젤 중요함
+
+매쉬(매쉬) 피직에섹(충돌체) 스켈레톤(뼈대)
+
+asset -  export - . 
+
+FSM _ 유한상태기계
+finite(유한하다) state(상태) mchine(기계)
+
+상태 - 조건 - 전이
+
+객채 - 추상
+
+if는 같은 수 넣어도 오류 안남
+switch는 같은 수 넣으념 오류남 _ 확인 용이  _ 문자도 가능
+
+열거형 enum  쓰면 숫자 자동 삽입   
+  ㄴ class 가능 UENUM(매크로)
+
+Cache - 기억하는 메모리
+
+owner - 컴포넌트의 주인 = 액터 or pawn 캐릭터
+
+라디안(호도원의 길이 기준)과 디그리(360도)의 차이
+
+/Script/Engine.SkeletalMesh'/Game/Characters/Mannequins/Meshes/SKM_Manny.SKM_Manny'
+
+* 포인터 - 전방선언
