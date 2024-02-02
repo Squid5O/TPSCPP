@@ -121,9 +121,10 @@ void UEnemyFSmComp::TickDamage()
 	// 현재시간이 1초가 되면
 	if(currentTIme > 1)
 	{
-	// 죽음상태로 전이하고 싶다. 
-		SetState( EEnemyState::DIE );
-		currentTIme = 0;
+	// 이동상태로 전이하고 싶다. 
+		SetState( EEnemyState::MOVE );
+		me->GetCapsuleComponent()->SetCollisionEnabled( ECollisionEnabled::QueryAndPhysics);
+		//currentTIme = 0;
 	}
 }
 
@@ -146,8 +147,22 @@ void UEnemyFSmComp::TickDie()
 void UEnemyFSmComp::TakeDamage( int damage )
 {
 	//체력을 damage 만큼 줄이고싶다.
+	
+//	me->HP -= damage;  마이너스로 넘어감
+	if ((me->HP -= damage) < 0)
+	{
+		me->HP = 0;
+	}
 	//만약 체력이 0보다 크다면 Damage 상태로 전이하고 싶다.
+	if (me->HP > 0)
+	{
+		SetState( EEnemyState::DAMAGE );
+
+	}else
 	//그렇지 않다면 ( 체력이 0 이하 라면)
+	{
+		SetState( EEnemyState::DIE );
+	}
 	// die 상태로 전이하고 싶다.
 
 
@@ -155,7 +170,6 @@ void UEnemyFSmComp::TakeDamage( int damage )
 	//state = EEnemyState::DAMAGE;
 	//currentTIme = 0;
 	me->GetCapsuleComponent()->SetCollisionEnabled( ECollisionEnabled::NoCollision );
-	SetState( EEnemyState::DAMAGE );
 }
 
 void UEnemyFSmComp::SetState( EEnemyState next )
