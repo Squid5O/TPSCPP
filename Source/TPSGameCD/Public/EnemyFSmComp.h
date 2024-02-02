@@ -10,11 +10,11 @@
 UENUM(BlueprintType)
 enum class EEnemyState : uint8
 {
-	IDLE,
-	MOVE,
-	ATTACk,
-	DAMAGE,
-	DIE,
+	IDLE UMETA(DisplayName = "대기") ,
+	MOVE UMETA( DisplayName = "이동" ) ,
+	ATTACk UMETA( DisplayName = "공격" ) ,
+	DAMAGE UMETA( DisplayName = "피해" ) ,
+	DIE UMETA( DisplayName = "사망" ) ,
 };
 
 
@@ -61,4 +61,14 @@ private:
 	void TickAttack();
 	void TickDamage();
 	void TickDie();
+
+	//현재시간
+	float currentTIme;
+	//공격대기시간
+	float attackWaitTime = 1;
+
+public:
+	void TakeDamage( int damage );
+
+	void SetState( EEnemyState next);
 };

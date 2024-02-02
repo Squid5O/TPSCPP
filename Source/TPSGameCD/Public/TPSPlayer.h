@@ -92,4 +92,8 @@ public:
 	/// // true: sniper, false = grenade
 	/// </summary>
 	bool bChooseSniperGun = false; 
+
+	//sniper 총으로 쐈을때 부딪힌 곳에 총알 자국을 남기고 싶다.
+	UPROPERTY(EditAnywhere)
+	class UParticleSystem* expVFX;
 };

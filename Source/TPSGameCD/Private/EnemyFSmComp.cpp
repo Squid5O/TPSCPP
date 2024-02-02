@@ -4,6 +4,8 @@
 #include "EnemyFSmComp.h"
 #include "Enemy.h"
 #include "../../../../../../../Source/Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "../../../../../../../Source/Runtime/Engine/Classes/Kismet/KismetMathLibrary.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values for this component's properties
 UEnemyFSmComp::UEnemyFSmComp()
@@ -53,7 +55,8 @@ void UEnemyFSmComp::TickIdle()
 	if (target)
 	{
 		//3. 이동상태로 전이하고 싶다. - > state의 값을 move로 바꾸고 싶다. 우효!
-		state = EEnemyState::MOVE;
+	//	state = EEnemyState::MOVE;
+		SetState( EEnemyState::MOVE );
 	}
 
 	
@@ -72,7 +75,8 @@ void UEnemyFSmComp::TickMove()
 	//float dist = target->GetDistanceTo(me);  // dist 계산 포함
 	if (dist < AttackDistance)
 	{
-		state = EEnemyState::ATTACk;
+		//state = EEnemyState::ATTACk;
+		SetState( EEnemyState::ATTACk );
 	}
 	
 
@@ -82,13 +86,81 @@ void UEnemyFSmComp::TickMove()
 //pc : Attack : 공격을 하고 2초 대기했다가 다시 공격하고 싶다. 만약 공격을 하려고 할때 목적지와의 거리를 3m를 초과한다면 이동상태로 전이하고 싶어
 void UEnemyFSmComp::TickAttack()
 {
+	//1. 시간이 흐르다가   persudo code
+	currentTIme += GetWorld()->GetDeltaSeconds();  //초
+	//2. 만약 현재시간이 2초(공격대기시간)을 초과하면  
+	// 현재시간이 > 공격대시간을 초과하면
+	if (currentTIme > attackWaitTime)   // 2초 임
+	{
+		currentTIme = 0; //3. 현재시간을 초기화 하고 싶다.
+		
+		//float distance = target->GetDistanceTo( me ); 간단구현 AACTOR
+			
+		float distance = UKismetMathLibrary::Vector_Distance2D(target->GetActorLocation() , me->GetActorLocation());
+			
+		//4. 목적지와의 거리를 재고
+		if (distance >AttackDistance) //5. 만약 그 거리가 공격가능거리를 초과한다면
+		{
+			//6. 이동상태로 전이하고 싶다. 
+			SetState( EEnemyState::MOVE );
+			//state = EEnemyState::MOVE;
+		}
+		else // 7. 그렇지 않다면
+		{
+			//8. 공격을 하고 싶다.
+			UE_LOG( LogTemp , Warning , TEXT( "Enemy->playerAttack!!" ) );
+			GEngine->AddOnScreenDebugMessage( -1 , 3 , FColor::Cyan , TEXT( "Enemy-playerAttack!!!" ));
+		}
+	}
 }
 
 void UEnemyFSmComp::TickDamage()
 {
+	//시간이 흐르다가
+	currentTIme += GetWorld()->GetDeltaSeconds();
+	// 현재시간이 1초가 되면
+	if(currentTIme > 1)
+	{
+	// 죽음상태로 전이하고 싶다. 
+		SetState( EEnemyState::DIE );
+		currentTIme = 0;
+	}
 }
 
 void UEnemyFSmComp::TickDie()
 {
+	//아래로 이동
+	float deltaTime = GetWorld()->GetDeltaSeconds();
+	FVector P0 = me->GetActorLocation();
+	FVector velocity = FVector::DownVector * 500;
+	me->SetActorLocation( P0 + velocity * deltaTime );
+	
+	//현재 시간이 지난지 2초가 되면 스스로 파괴하고 싶다.
+	currentTIme += deltaTime;
+	if (currentTIme > 2)
+	{
+		me->Destroy();
+	}
+}
+
+void UEnemyFSmComp::TakeDamage( int damage )
+{
+	//체력을 damage 만큼 줄이고싶다.
+	//만약 체력이 0보다 크다면 Damage 상태로 전이하고 싶다.
+	//그렇지 않다면 ( 체력이 0 이하 라면)
+	// die 상태로 전이하고 싶다.
+
+
+	//me->Destroy(); 코드 확인용 임시
+	//state = EEnemyState::DAMAGE;
+	//currentTIme = 0;
+	me->GetCapsuleComponent()->SetCollisionEnabled( ECollisionEnabled::NoCollision );
+	SetState( EEnemyState::DAMAGE );
+}
+
+void UEnemyFSmComp::SetState( EEnemyState next )
+{
+	state = next;
+	currentTIme = 0;
 }
 

@@ -33,4 +33,10 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	class UEnemyFSmComp* enemyFSM;
+
+public:
+	void OnMyTakeDamage( int damage );
+
+	UPROPERTY(EditAnywhere)
+	int32 HP = 2;
 };

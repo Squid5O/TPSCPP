@@ -12,6 +12,9 @@
 #include "../../../../../../../Source/Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 #include "../../../../../../../Source/Runtime/UMG/Public/Blueprint/UserWidget.h"
 #include "../../../../../../../Source/Runtime/Engine/Classes/Components/SceneComponent.h"
+#include "../../../../../../../Source/Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "Enemy.h"
+#include "EnemyFSmComp.h"
 
 // Sets default values
 ATPSPlayer::ATPSPlayer()
@@ -208,7 +211,22 @@ void ATPSPlayer::onActionFire()
 				//hitComp->AddForce( -outHit.ImpactNormal * 500000 * hitComp->GetMass() );
 				hitComp->AddForce(dir.GetSafeNormal() * 500000 * hitComp->GetMass() );
 			}
-			
+
+			//pc: 부짖힌 곳에 expVFX를 생성해서 배치하고 싶다.
+			UGameplayStatics::SpawnEmitterAtLocation( GetWorld() , expVFX , outHit.ImpactPoint );
+
+			//pc: 만약 부딪힌 것이 AEnemy라면
+			//적에게 데미지 1점을 주고 싶다.
+			AEnemy* enemy = Cast<AEnemy>( outHit.GetActor() );
+
+			  // check( enemy ); // 어썰트. true 아닐 경우 에러 뱉음
+				
+			if(enemy)
+			{ 
+				auto fsm = Cast<UEnemyFSmComp>( enemy->GetDefaultSubobjectByName( TEXT( "enemyFSM" ) ) );
+				fsm->TakeDamage( 1 );
+			//	enemy->OnMyTakeDamage( 1 ); 간단 구현. 위는 객체지향구현
+			}
 		}
 		else
 		{
