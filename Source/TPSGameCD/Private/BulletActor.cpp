@@ -35,7 +35,7 @@ ABulletActor::ABulletActor()
 	sphereComp->SetSphereRadius(12.5f);
 
 	//총알 액터의 수명을 5초로 하고 싶다
-	SetLifeSpan( 5 );
+	SetLifeSpan( 10 );
 }
 
 // Called when the game starts or when spawned

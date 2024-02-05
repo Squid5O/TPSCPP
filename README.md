@@ -287,3 +287,32 @@ check( 어썰트
 코테시발
 
 파라미터 매개변수 아규먼트?
+
+0-000000000000--02.05------------------시작
+
+애니메이션은 스캘레톤매쉬가함
+
+애니메이션은 클래스파인더?
+
+_C는 왜 나옴? 경로 가져갈때도 C 붙여야함
+
+애니메이션 제어
+ㄴEventGraph -> 변수의 값을 제어
+ㄴAnimGraph -> 그 변수의 값을 조건으로 흐름을 만들어서 어떤 애니메이션을 출력할지 결정한다. 
+
+Blend Poses by bool - stateMchien
+ㄴ int, eunm 가능
+
+anime entry - > beginplay 개념  tick은 아님
+
+백터의 곱은 2가지 
+ㄴX, C(ross) 외적
+ㄴ º, Dot 내적 _ 스칼라
+
+너무 짧은 애니메이션은 import 할때 clost snap 설정 On
+
+자동으로 갈때 Automatic Rule Based on Sequnce
+
+is falling _ 언리얼 내의 중력 값?
+
+alias 하나로 아니메 모든 연결 가능
