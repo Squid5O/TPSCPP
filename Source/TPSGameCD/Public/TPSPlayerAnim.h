@@ -14,20 +14,18 @@ class TPSGAMECD_API UTPSPlayerAnim : public UAnimInstance
 {
 	GENERATED_BODY()
 	
-
 public:
+
+	virtual void NativeThreadSafeUpdateAnimation( float DeltaSeconds );
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool isCrouched;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool isInAir;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool isCrouchedD;
-
+	float speed;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float Speed;
-
+	float direction;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float Dirction;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float ptich;
+	float pitch;
 };

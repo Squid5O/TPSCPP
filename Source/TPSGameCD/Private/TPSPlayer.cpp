@@ -146,6 +146,11 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 	PlayerInputComponent->BindAction( TEXT( "Zoom" ) , IE_Pressed , this, &ATPSPlayer::OnActionZoomIn);
 	PlayerInputComponent->BindAction( TEXT( "Zoom" ) , IE_Released, this , &ATPSPlayer::OnAcitonZoomOut );
+
+	PlayerInputComponent->BindAction( TEXT( "ActionRun" ) , IE_Pressed , this , &ATPSPlayer::OnActionRunPressed );
+	PlayerInputComponent->BindAction( TEXT( "ActionRun" ) , IE_Released , this , &ATPSPlayer::OnActionRunReleased );
+
+	PlayerInputComponent->BindAction( TEXT( "ActionCrouch" ) , IE_Pressed , this , &ATPSPlayer::OnActionCrouched );
 }
 
 void ATPSPlayer::Move()
@@ -185,6 +190,12 @@ void ATPSPlayer::onActionJump()
 
 void ATPSPlayer::onActionFire()
 {
+	//총 소리를 내고 싶다.
+	UGameplayStatics::PlaySound2D( GetWorld() , fireSFX );
+	//움찔 애니메이션을 넣고 싶다.
+	this->PlayAnimMontage( fireMontage );  
+	//ACharacter::PlayAnimMontage = 얘 자체가 Chartacter라 안써두됌 ,, this 생략 가능
+
 	// bChooseSniperGun ture false로 나가는거 다르게
 	if(bChooseSniperGun==false){
 	FTransform t = gunMeshComp->GetSocketTransform(TEXT("FirePosition"));
@@ -284,5 +295,35 @@ void ATPSPlayer::OnAcitonZoomOut()
 	sniperScorpUI->SetVisibility( ESlateVisibility::Hidden);
 	//pc:ZoomOut을 하면 CroessHairUI을 보이게, sniperUI를 보이지 않게 하고 싶다.
 	targetFOV = 90;
+}
+
+void ATPSPlayer::OnActionRunPressed()
+{
+	// 걷기의 최대 speed를 1200으로 하고 싶다.
+	GetCharacterMovement()->MaxWalkSpeed = 1200;
+}
+
+void ATPSPlayer::OnActionRunReleased()
+{
+	// 걷기의 최대 speed를 600으로 하고 싶다.
+	GetCharacterMovement()->MaxWalkSpeed = 600;
+}
+
+void ATPSPlayer::OnActionCrouched()
+{
+	if (isCrouched) 
+	{
+		//이미 쪼그려 있다면 서고 싶다.
+		GetCharacterMovement()->UnCrouch();
+		isCrouched = false;
+	}
+	else
+	{
+		//서있다면 쪼그리고 싶다.
+		GetCharacterMovement()->Crouch();
+		isCrouched = true;
+	}
+	isCrouched = !isCrouched;
+
 }
 
