@@ -323,7 +323,6 @@ void ATPSPlayer::OnActionCrouched()
 		GetCharacterMovement()->Crouch();
 		isCrouched = true;
 	}
-	isCrouched = !isCrouched;
 
 }
 
