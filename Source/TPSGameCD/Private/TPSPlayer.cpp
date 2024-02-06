@@ -61,7 +61,7 @@ ATPSPlayer::ATPSPlayer()
 
 	//pc: gunMesh Comp를 생성해서 로딩도 하고 배치학 싶다. mesh에 attach
 	gunMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>( TEXT( "gunMeshComp" ) );
-	gunMeshComp->SetupAttachment( GetMesh() );
+	gunMeshComp->SetupAttachment( GetMesh() , TEXT("hand_rSocket"));
 
 	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempGunMesh( 
 		TEXT( "/Script/Engine.SkeletalMesh'/Game/models/FPWeapon/Mesh/SK_FPGun.SK_FPGun'" ) );
@@ -73,7 +73,7 @@ ATPSPlayer::ATPSPlayer()
 	//pc: snipeMeshComp를 생성하고 싶다.
 	//pc: staticMesh를 적용해서 매쉬에 붙이고 싶다.
 	sniperMeshComp = CreateDefaultSubobject<UStaticMeshComponent>( TEXT( "sniperMeshComp" ) );
-	sniperMeshComp->SetupAttachment( GetMesh() );
+	sniperMeshComp->SetupAttachment( GetMesh() , TEXT( "hand_rSocket" ) );
 	ConstructorHelpers::FObjectFinder<UStaticMesh> tempSuniperMesh( 
 		TEXT( "/Script/Engine.StaticMesh'/Game/models/SniperGun/sniper1.sniper1'" ) );
 	if (tempSuniperMesh.Succeeded()) {

@@ -316,3 +316,19 @@ anime entry - > beginplay 개념  tick은 아님
 is falling _ 언리얼 내의 중력 값?
 
 alias 하나로 아니메 모든 연결 가능
+
+--------------2.06  화요일 수업 시작
+
+ EventGraph -> 코딩을 하는 곳
+animeGraph -> 애니메이션 입히는곳
+
+C++ 작업 하려면 inputAction  오버라이딩 바인딩 끄는게 좋다.
+
+몽타쥬 = slot (간단이해)
+
+슬롯은 원본 애니메이션이 있어야함(stateMechin)
+
+cached - 로 원본 애니메 나누기 가능
+
+AO 는 마지막이 잘 구현됨
+-------------------------------
