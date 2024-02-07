@@ -31,9 +31,10 @@ public:
 	
 	//pc: EnemyFSMComp를 컴포넌트로 갖고 싶다. 
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	class UEnemyFSmComp* enemyFSM;
 
+	
 public:
 	void OnMyTakeDamage( int damage );
 

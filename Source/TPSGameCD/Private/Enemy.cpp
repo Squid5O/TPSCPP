@@ -14,10 +14,12 @@ AEnemy::AEnemy()
 	//fsm컴포넌트를 생성하고 싶다
 	enemyFSM = CreateDefaultSubobject<UEnemyFSmComp>( TEXT( "enemyFSM" ));
 
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempMesh( TEXT( "/Script/Engine.SkeletalMesh'/Game/Characters/Mannequins/Meshes/SKM_Manny.SKM_Manny'" ) );
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempMesh( TEXT( "/Script/Engine.SkeletalMesh'/Game/models/Enemy/Model/vampire_a_lusth.vampire_a_lusth'" ) );
 	if (tempMesh.Succeeded()) {
 		GetMesh()->SetSkeletalMesh( tempMesh.Object );
 		GetMesh()->SetRelativeLocationAndRotation(FVector( 0 , 0 , -90 ) , FRotator( 0 , -90 , 0 ) );
+
+		GetMesh()->SetRelativeScale3D( FVector( 0.8f ));
 	}
 }
 

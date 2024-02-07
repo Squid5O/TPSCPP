@@ -110,5 +110,10 @@ public:
 	void OnActionRunReleased();
 
 	void OnActionCrouched();
+	void OnActionDiveRoll();
 
+	UPROPERTY(EditAnywhere)
+	class UAnimMontage* diveMontage;
+
+	int64 mllisecnds;
 };

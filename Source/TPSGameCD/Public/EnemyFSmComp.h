@@ -41,7 +41,7 @@ public:
 	//3. Attack : 공격을 하고 2초 대기했다가 다시 공격하고 싶다. 만약 공격을 하려고 할때 목적지와의 거리를 3m를 초과한다면 이동상태로 전이하고 싶어
 
 		
-	UPROPERTY( EditAnywhere )
+	UPROPERTY( EditAnywhere , BlueprintReadOnly )
 	EEnemyState state;
 
 	UPROPERTY( EditAnywhere )
