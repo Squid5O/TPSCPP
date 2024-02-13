@@ -54,6 +54,11 @@ public:
 	UPROPERTY( EditAnywhere )
 	class AEnemy* me;
 
+	//리플렉션 , 직렬화, 스마트포인터
+	UPROPERTY(EditDefaultsOnly)
+	class UEnmeyAnime* enemyAnim;
+
+
 
 private:
 	void TickIdle();
@@ -62,13 +67,21 @@ private:
 	void TickDamage();
 	void TickDie();
 
+public:
+	void doDamageEnd();
+	// 죽음 애니메이션 종료 여부를 체크하기위한 플래그 변수
+	bool isDieDone;
+
 	//현재시간
 	float currentTIme;
 	//공격대기시간
-	float attackWaitTime = 1;
+	float attackWaitTime = 2;
 
 public:
 	void TakeDamage( int damage );
 
 	void SetState( EEnemyState next);
+
+	UPROPERTY(EditDefaultsOnly)
+	class UAnimMontage* enemyMontage;
 };

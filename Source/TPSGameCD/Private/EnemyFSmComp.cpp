@@ -6,6 +6,7 @@
 #include "../../../../../../../Source/Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "../../../../../../../Source/Runtime/Engine/Classes/Kismet/KismetMathLibrary.h"
 #include "Components/CapsuleComponent.h"
+#include "EnmeyAnime.h"
 
 // Sets default values for this component's properties
 UEnemyFSmComp::UEnemyFSmComp()
@@ -25,7 +26,7 @@ void UEnemyFSmComp::BeginPlay()
 
 	me = Cast<AEnemy>( GetOwner() );  // cast bpcomp owner(enemy) 
 		
-	// ...
+	enemyAnim = Cast<UEnmeyAnime>(me->GetMesh()->GetAnimInstance());
 	
 }
 
@@ -77,6 +78,11 @@ void UEnemyFSmComp::TickMove()
 	{
 		//state = EEnemyState::ATTACk;
 		SetState( EEnemyState::ATTACk );
+	//	enemyAnim->bAttack = true;
+	}
+	else
+	{
+		enemyAnim->bAttack = true;
 	}
 	
 
@@ -116,20 +122,24 @@ void UEnemyFSmComp::TickAttack()
 
 void UEnemyFSmComp::TickDamage()
 {
-	//시간이 흐르다가
-	currentTIme += GetWorld()->GetDeltaSeconds();
-	// 현재시간이 1초가 되면
-	if(currentTIme > 1)
-	{
-	// 이동상태로 전이하고 싶다. 
-		SetState( EEnemyState::MOVE );
-		me->GetCapsuleComponent()->SetCollisionEnabled( ECollisionEnabled::QueryAndPhysics);
-		//currentTIme = 0;
-	}
+	////시간이 흐르다가
+	//currentTIme += GetWorld()->GetDeltaSeconds();
+	//// 현재시간이 1초가 되면
+	//if(currentTIme > 1)
+	//{
+	//// 이동상태로 전이하고 싶다. 
+	//	SetState( EEnemyState::MOVE );
+	//	me->GetCapsuleComponent()->SetCollisionEnabled( ECollisionEnabled::QueryAndPhysics);
+	//	//currentTIme = 0;
+	//}
 }
 
 void UEnemyFSmComp::TickDie()
 {
+	//만약 죽음 애니메이션이 끝났다면 
+	if (false == isDieDone)
+		return;
+
 	//아래로 이동
 	float deltaTime = GetWorld()->GetDeltaSeconds();
 	FVector P0 = me->GetActorLocation();
@@ -138,10 +148,19 @@ void UEnemyFSmComp::TickDie()
 	
 	//현재 시간이 지난지 2초가 되면 스스로 파괴하고 싶다.
 	currentTIme += deltaTime;
+	//2초가 되면 
 	if (currentTIme > 2)
 	{
 		me->Destroy();
 	}
+}
+
+void UEnemyFSmComp::doDamageEnd()
+{
+// 이동상태로 전이하고 싶다. 
+	SetState( EEnemyState::MOVE );
+	me->GetCapsuleComponent()->SetCollisionEnabled( ECollisionEnabled::QueryAndPhysics);
+	//currenttime = 0;
 }
 
 void UEnemyFSmComp::TakeDamage( int damage )
@@ -157,11 +176,18 @@ void UEnemyFSmComp::TakeDamage( int damage )
 	if (me->HP > 0)
 	{
 		SetState( EEnemyState::DAMAGE );
+		//pc: 데이지 애니메이션 몽타주 재생 but 랜덤
+		int index = FMath::RandRange( 0 , 1 );
+		FString sectionName = FString::Printf( TEXT( "Damage%d" ) , index );
 
+		me->PlayAnimMontage( enemyMontage, 1, FName(*sectionName));
 	}else
 	//그렇지 않다면 ( 체력이 0 이하 라면)
 	{
 		SetState( EEnemyState::DIE );
+		//죽음 애니메이션 몽타주 재생
+		me->PlayAnimMontage( enemyMontage, 1, TEXT("Die"));
+		isDieDone = false;
 	}
 	// die 상태로 전이하고 싶다.
 

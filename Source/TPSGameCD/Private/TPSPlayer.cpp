@@ -237,7 +237,7 @@ void ATPSPlayer::onActionFire()
 			if(enemy)
 			{ 
 				auto fsm = Cast<UEnemyFSmComp>( enemy->GetDefaultSubobjectByName( TEXT( "enemyFSM" ) ) );
-				fsm->TakeDamage( 1 );
+				fsm->TakeDamage( 5 );
 			//	enemy->OnMyTakeDamage( 1 ); 간단 구현. 위는 객체지향구현
 			}
 		}
