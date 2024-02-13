@@ -358,3 +358,9 @@ UPROPERTY 기능
 
 Montage 하나에 여러 애니메이션 넣기 가능 ( Montage section)
 ㄴ 여기에도 notify 가능
+
+
+-----
+
+EnemyHPWidget
+오후 수업 터져서 안함

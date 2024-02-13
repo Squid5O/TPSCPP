@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "../../../../../../../Source/Runtime/UMG/Public/Components/WidgetComponent.h"
 #include "Enemy.generated.h"
 
 UCLASS()
@@ -40,4 +41,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	int32 HP = 10;
+
+	UPROPERTY(EditDefaultsOnly)
+	class UWidgetComponent* healthUI;
 };

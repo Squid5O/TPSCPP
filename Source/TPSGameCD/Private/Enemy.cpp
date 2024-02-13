@@ -3,6 +3,7 @@
 
 #include "Enemy.h"
 #include "EnemyFSmComp.h"
+#include "../../../../../../../Source/Runtime/UMG/Public/Components/WidgetComponent.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -21,6 +22,12 @@ AEnemy::AEnemy()
 
 		GetMesh()->SetRelativeScale3D( FVector( 0.8f ));
 	}
+
+	////healthUI를 만들어서 루트에 부팅고 싶다.
+	//healthUI = CreateDefaultSubobject<UWidgetComponent>( TEXT( 'healthUI' ) );
+	//healthUI->SetupAttachment( RootComponent );
+	//healthUI->SetRelativeLocation( FVector( 0 , 0 , 100 ) );
+	////LOc : 0,0.100
 }
 
 // Called when the game starts or when spawned
